@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import products from './data/products.js';
+import products from '../data/products.js';
 
 // All Products API
 router.get('/', (req,res) => {
