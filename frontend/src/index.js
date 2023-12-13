@@ -5,7 +5,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/index.css'
 import App from './App';
-import store from '../store';
+import store from './store';
 import { Provider } from 'react-redux';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
