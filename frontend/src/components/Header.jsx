@@ -6,7 +6,7 @@ import { FaShoppingCart, FaUser } from "react-icons/fa";
 const Header = () => {
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+      <Navbar bg="white" data-bs-theme="white" variant="white" expand="md" collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>
