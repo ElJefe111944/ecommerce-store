@@ -43,9 +43,35 @@ const getUsers = asyncHandler(async (req, res) => {
     res.send('Get Users');
 });
 
+// description: get user by id
+// route: GET /api/users/:id
+// access: private/admin
+const getUserById = asyncHandler(async (req, res) => {
+    res.send('Get User by ID');
+});
+
+// description: update users 
+// route: PUT /api/users/:id
+// access: private/admin
+const updateUser = asyncHandler(async (req, res) => {
+    res.send('Update User');
+});
+
 // description: delete users 
 // route: DELETE /api/users/:id
 // access: private/admin
 const deleteUser = asyncHandler(async (req, res) => {
     res.send('Delete User');
 });
+
+export { 
+    authUser,
+    registerUser,
+    logoutUser,
+    getUserProfile,
+    updateUserProfile,
+    getUsers,
+    deleteUser,
+    getUserById,
+    updateUser
+ }
