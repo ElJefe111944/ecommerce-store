@@ -5,6 +5,8 @@ const notFound = (req, res, next) => {
     // Sets the HTTP status code to 404 and passes the error to the next middleware in the chain.
     res.status(404);
     next(error);
+
+    return
 };
 // This middleware is meant to handle general errors that may occur during the processing of a request.
 const errorHandler = (err, req, res, next) => {
@@ -21,6 +23,11 @@ const errorHandler = (err, req, res, next) => {
         message = `Resource not found`;
         statusCode = 404;
     }; 
+    // Check if headers have already been sent
+    if (res.headersSent) {
+        return next(err);
+    }
+
     //Finally, it sends a JSON response with the appropriate status code, error message, and, in production mode, a simplified stack trace.
     res.status(statusCode).json({
         message,
