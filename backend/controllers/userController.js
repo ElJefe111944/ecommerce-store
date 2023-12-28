@@ -41,8 +41,34 @@ const authUser = asyncHandler(async (req, res) => {
 // route: GET /api/users
 // access: public
 const registerUser = asyncHandler(async (req, res) => {
-    res.send('Register User');
-});
+    const { name, email, password } = req.body;
+
+    const userExists = await User.findOne({ email });
+
+    if(userExists){
+        // Client error
+        res.status(400);
+        throw new Error('User already exists');
+    }
+
+    const user = await User.create({
+        name,
+        email,
+        password
+    });
+
+    if (user){
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin
+        });
+    } else {
+        res.status(400);
+        throw new Error('Invalid user data');
+    };
+ });
 
 // description: logout user / clear cookie
 // route: POST /api/users/logout
