@@ -7,7 +7,6 @@ import {
     getOrderById,
     updateToDelivered,
     updateOrderToPaid,
-    updateToDelivered
  } from "../controllers/orderController.js";
 
  import { protect, admin } from "../middleware/authMiddleware.js"
@@ -17,7 +16,7 @@ import {
 // GET - get all orders (admin) or POST - add order items (registered/admin)
 router.route('/').get(protect, admin, getAllOrders).post(protect, addOrderItems); 
 // GET - get my orders - registered users
-router.route('/mine').get(protect, getMyOrders);
+router.route('/myorders').get(protect, getMyOrders);
 // GET - order by ID - Admin users 
 router.route('/:id').get(protect, admin, getOrderById);
 // PUT - update to paid - admin/registered

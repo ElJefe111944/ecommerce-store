@@ -21,14 +21,14 @@ const getMyOrders = asyncHandler(async (req, res) => {
 
 // description: Get order by ID
 // route: GET /api/orders/:id
-// access: private
+// access: private/admin
 
 const getOrderById = asyncHandler(async (req, res) => {
     res.send('get order by ID');
 });
 
 // description: Update order to paid
-// route: GET /api/orders/:id/pay
+// route: PUT /api/orders/:id/pay
 // access: private
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
@@ -58,5 +58,4 @@ export {
     getOrderById,
     updateToDelivered,
     updateOrderToPaid,
-    updateToDelivered
 }
