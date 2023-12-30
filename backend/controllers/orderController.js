@@ -8,7 +8,39 @@ import Order from "../models/orderModel.js";
 // access: private
 
 const addOrderItems = asyncHandler(async (req, res) => {
-    res.send('add order items');
+    const { 
+        orderItems,
+        shippingAddress,
+        paymentMethod,
+        itemPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice
+     } = req.body;
+
+     if(orderItems && orderItems.length === 0){
+        res.status(400);
+        throw new Error('No order items');
+     } else {
+        const order = new Order({
+            orderItems: orderItems.map((item) => ({
+                ...item, 
+                product: item._id,
+                _id: undefined
+            })),
+            user: req.user._id,
+            shippingAddress,
+            paymentMethod,
+            itemPrice,
+            taxPrice,
+            shippingPrice,
+            totalPrice
+        });
+
+        const createdOrder = await order.save();
+
+        res.status(201).json(createdOrder);
+     };
 });
 
 // description: Get logged in users order
