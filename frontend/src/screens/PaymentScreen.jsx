@@ -25,7 +25,7 @@ const PaymentScreen = () => {
 
             navigate('/shipping');
         }
-    }, [shippingAddress, navigate]);
+    }, [shippingAddress.address, shippingAddress.city, shippingAddress.country, shippingAddress.postalCode, navigate]);
 
     const submitHandler = (e) => {
         e.preventDefault();
