@@ -18,10 +18,10 @@ const PaymentScreen = () => {
 
     // Check Shipping Address 
     useEffect(() => {
-        if(shippingAddress.address === '' || 
-        shippingAddress.city === '' || 
-        shippingAddress.country === '' || 
-        shippingAddress.postalCode === ''){
+        if (shippingAddress.address === '' ||
+            shippingAddress.city === '' ||
+            shippingAddress.country === '' ||
+            shippingAddress.postalCode === '') {
 
             navigate('/shipping');
         }
@@ -33,35 +33,35 @@ const PaymentScreen = () => {
         navigate('/placeorder');
     };
 
-  return (
-    <FormContainer>
-        <CheckoutSteps step3 step4 />
-        <h1>Payment Method</h1>
-        <Form onSubmit={submitHandler}>
-            <Form.Group>
-                <Form.Label as='legend'>
-                    Select Method
-                </Form.Label>
-                <Col>
-                    <Form.Check 
-                    type="radio"
-                    className="my-2"
-                    label="Paypal or Credit Card"
-                    id="Paypal"
-                    name="paymentMethod"
-                    value={paymentMethod}
-                    checked
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    >
-                    </Form.Check>
-                </Col>
-            </Form.Group>
-            <Button type="submit" variant="primary">
-                Continue
-            </Button>
-        </Form>
-    </FormContainer>
-  )
+    return (
+        <FormContainer>
+            <CheckoutSteps step3 step4 />
+            <h1>Payment Method</h1>
+            <Form onSubmit={submitHandler}>
+                <Form.Group>
+                    <Form.Label as='legend'>
+                        Select Method
+                    </Form.Label>
+                    <Col>
+                        <Form.Check
+                            type="radio"
+                            className="my-2"
+                            label="Paypal or Credit Card"
+                            id="Paypal"
+                            name="paymentMethod"
+                            value={paymentMethod}
+                            checked
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                        >
+                        </Form.Check>
+                    </Col>
+                </Form.Group>
+                <Button type="submit" variant="primary">
+                    Continue
+                </Button>
+            </Form>
+        </FormContainer>
+    )
 }
 
 export default PaymentScreen
