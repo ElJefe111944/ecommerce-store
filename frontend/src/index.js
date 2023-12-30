@@ -18,6 +18,7 @@ import PrivateRoute from './components/PrivateRoute';
 const router = createBrowserRouter(
   createRoutesFromElements(
       <Route path='/' element={<App />}>
+        {/* Public Routes */}
         <Route index={true} path='/' element={<HomeScreen />} />
         <Route path='/product/:id' element={<ProductScreen />} />
         <Route path='/cart' element={<CartScreen />} />
