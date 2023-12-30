@@ -18,7 +18,11 @@ const PaymentScreen = () => {
 
     // Check Shipping Address 
     useEffect(() => {
-        if(!shippingAddress){
+        if(shippingAddress.address === '' || 
+        shippingAddress.city === '' || 
+        shippingAddress.country === '' || 
+        shippingAddress.postalCode === ''){
+
             navigate('/shipping');
         }
     }, [shippingAddress, navigate]);
