@@ -17,8 +17,8 @@ import {
 router.route('/').get(protect, admin, getAllOrders).post(protect, addOrderItems); 
 // GET - get my orders - registered users
 router.route('/myorders').get(protect, getMyOrders);
-// GET - order by ID - Admin users 
-router.route('/:id').get(protect, admin, getOrderById);
+// GET - order by ID - registered users 
+router.route('/:id').get(protect, getOrderById);
 // PUT - update to paid - admin/registered
 router.route('/:id/pay').put(protect, updateOrderToPaid);
 // PUT - update to delivered - admin/registered
