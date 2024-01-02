@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, Col, Row, ListGroup, Image, Card, Form } from "react-bootstrap";
+import { Button, Col, Row, ListGroup, Image, Card, } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useSelector } from "react-redux";
@@ -35,13 +35,53 @@ const OrderScreen = () => {
 
                 paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
             }
-            if(order & !order.isPaid){
-                if(!window.paypal){
+            if (order && !order.isPaid) {
+                if (!window.paypal) {
                     loadPayPalScript();
                 };
             };
         }
     }, [order, paypal, paypalDispatch, loadingPaypal, errorPaypal]);
+
+    const onApproveTest = async () => {
+        await payOrder({ orderId, details: { payer: {} } });
+
+        refetch();
+        toast.success('Payment successful');
+
+    };
+
+    const onApprove = (data, actions) => {
+        return actions.order.capture().then(async function (details) {
+            try {
+                await payOrder({ orderId, details });
+                refetch();
+                toast.success('Payment successful');
+
+            } catch (error) {
+                toast.error(error?.data?.message || error?.message);
+            }
+        });
+    };
+
+    const onError = (error) => {
+        toast.error(error?.data?.message || error.message);
+    };
+
+    const createOrderHandler = (data, actions) => {
+        return actions.order.create({
+            purchase_units: [
+                {
+                    amount: {
+                        value: order.totalPrice,
+                    }
+                }
+            ]
+        }).then((orderId) => {
+            return orderId;
+        });
+    };
+
 
     return isLoading ? <Loader /> : error ? <Message variant='danger' /> : (
         <>
@@ -150,7 +190,24 @@ const OrderScreen = () => {
                                     </Row>
                                 </Row>
                             </ListGroup.Item>
-                            {/* PAY ORDER PLACEHOLDER */}
+                            {/* PAY ORDER */}
+                            {!order.isPaid && (
+                                <ListGroup.Item>
+                                    {loadingPay && <Loader />}
+                                    {isPending ? <Loader /> : (
+                                        <div>
+                                            {/* <Button onClick={onApproveTest} style={{ marginBottom: '10px' }}>Test Pay Order</Button> */}
+                                            <div>
+                                                <PayPalButtons
+                                                    createOrder={createOrderHandler}
+                                                    onApprove={onApprove}
+                                                    onError={onError}
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                </ListGroup.Item>
+                            )}
                             {/* MARK AS DELIEVERED PLACEHOLDER */}
                         </ListGroup>
                     </Card>

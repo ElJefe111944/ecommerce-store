@@ -22,10 +22,17 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 url: `${USERS_URL}/logout`,
                 method: 'POST',
             }),
+        }),
+        profile: builder.mutation({
+            query: (data) => ({
+                url: `${USERS_URL}/profile`,
+                method: 'PUT',
+                body: data,
+            }),
         })
     }),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = usersApiSlice;
+export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useProfileMutation } = usersApiSlice;
