@@ -1,15 +1,48 @@
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Col, Row, ListGroup, Image, Card, Form } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { useGetOrderDetailsQuery } from "../slices/ordersApiSlice";
+import { useSelector } from "react-redux";
+import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery } from "../slices/ordersApiSlice";
+import { usePayPalScriptReducer, PayPalButtons } from "@paypal/react-paypal-js";
+import { toast } from "react-toastify";
 
 const OrderScreen = () => {
 
     const { id: orderId } = useParams();
 
     const { data: order, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
-    console.log(order)
+
+    const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+    const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+    const { data: paypal, isLoading: loadingPaypal, error: errorPaypal } = useGetPayPalClientIdQuery();
+
+    const { userInfo } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (!errorPaypal && !loadingPaypal && paypal.clientId) {
+            const loadPayPalScript = async () => {
+                paypalDispatch({
+                    type: "resetOptions",
+                    value: {
+                        'client-id': paypal.clientId,
+                        currency: 'GBP',
+                    },
+                });
+
+                paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+            }
+            if(order & !order.isPaid){
+                if(!window.paypal){
+                    loadPayPalScript();
+                };
+            };
+        }
+    }, [order, paypal, paypalDispatch, loadingPaypal, errorPaypal]);
+
     return isLoading ? <Loader /> : error ? <Message variant='danger' /> : (
         <>
             <h1>Order Number: {order._id}</h1>
@@ -89,7 +122,7 @@ const OrderScreen = () => {
                                         Items
                                     </Col>
                                     <Col>
-                                    £{order.itemsPrice}
+                                        £{order.itemsPrice}
                                     </Col>
                                 </Row>
                                 <Row>
@@ -97,28 +130,28 @@ const OrderScreen = () => {
                                         Shipping Price
                                     </Col>
                                     <Col>
-                                    £{order.shippingPrice}
+                                        £{order.shippingPrice}
                                     </Col>
                                     <Row>
-                                    <Col>
-                                        Tax
-                                    </Col>
-                                    <Col>
-                                    £{order.taxPrice}
-                                    </Col>
-                                    <Row>
-                                    <Col>
-                                        Total
-                                    </Col>
-                                    <Col>
-                                    £{order.totalPrice}
-                                    </Col>
-                                </Row>
-                                </Row>
+                                        <Col>
+                                            Tax
+                                        </Col>
+                                        <Col>
+                                            £{order.taxPrice}
+                                        </Col>
+                                        <Row>
+                                            <Col>
+                                                Total
+                                            </Col>
+                                            <Col>
+                                                £{order.totalPrice}
+                                            </Col>
+                                        </Row>
+                                    </Row>
                                 </Row>
                             </ListGroup.Item>
                             {/* PAY ORDER PLACEHOLDER */}
-                             {/* MARK AS DELIEVERED PLACEHOLDER */}
+                            {/* MARK AS DELIEVERED PLACEHOLDER */}
                         </ListGroup>
                     </Card>
                 </Col>
