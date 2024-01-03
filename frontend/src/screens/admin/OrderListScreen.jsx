@@ -3,7 +3,6 @@ import { Table, Button } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
-import { useSelector, useDispatch } from 'react-redux';
 import { useGetAllOrdersQuery } from '../../slices/ordersApiSlice';
 
 
