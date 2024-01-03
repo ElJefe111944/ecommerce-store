@@ -21,10 +21,23 @@ export const productsApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
             }),
             invalidatesTags: ['Product'], // stops caching, so data is fresh
+        }),
+        updateProduct: builder.mutation({
+            query: (data) => ({
+                url: `${PRODUCTS_URL}/${data._id}`,
+                method: 'PUT',
+                body: data,
+            }),
+            invalidatesTags: ['Product'],
         })
     }),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetProductsQuery, useGetProductDetailsQuery, useCreateProductMutation } = productsApiSlice;
+export const { 
+    useGetProductsQuery, 
+    useGetProductDetailsQuery, 
+    useCreateProductMutation, 
+    useUpdateProductMutation 
+} = productsApiSlice;
