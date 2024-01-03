@@ -31,13 +31,14 @@ const createProduct = asyncHandler(async (req, res) => {
         user: req.user._id,
         image: 'images/sample.jpg',
         brand: 'Product brand',
+        category: 'Product category',
         countInStock: 0,
         numReviews: 0,
         description: 'Product description',
     })
 
     const createdProduct = await product.save();
-    res.status(201).json(createProduct);
+    res.status(201).json(createdProduct);
 });
 
 export { getProducts, getProductById, createProduct };
