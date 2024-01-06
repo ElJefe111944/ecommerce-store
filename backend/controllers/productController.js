@@ -18,7 +18,7 @@ const getProductById = asyncHandler(async (req, res) => {
         return res.json(product);
     } else {
         res.status(404);
-        throw new Error('Resource not found');
+        throw new Error('Product not found');
     }
 });
 // description: create a product
@@ -29,7 +29,7 @@ const createProduct = asyncHandler(async (req, res) => {
         name: 'Product name',
         price: 0,
         user: req.user._id,
-        image: 'images/sample.jpg',
+        image: '/images/sample.jpg',
         brand: 'Product brand',
         category: 'Product category',
         countInStock: 0,
