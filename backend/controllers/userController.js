@@ -147,14 +147,32 @@ const getUserById = asyncHandler(async (req, res) => {
 // route: PUT /api/users/:id
 // access: private/admin
 const updateUser = asyncHandler(async (req, res) => {
-    res.send('Update User');
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.isAdmin = Boolean(user.body.isAdmin || user.isAdmin);
+
+        const updatedUser = await user.save();
+
+        res.status(200).json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+        });
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
 });
 
 // description: delete users 
 // route: DELETE /api/users/:id
 // access: private/admin
 const deleteUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id).select('-password');
+    const user = await User.findById(req.params.id);
 
     if (user) {
         if (user.isAdmin) {
