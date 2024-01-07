@@ -10,10 +10,10 @@ const authUser = asyncHandler(async (req, res) => {
 
     const user = await User.findOne({ email });
 
-    if(user && (await user.matchPassword(password))){
+    if (user && (await user.matchPassword(password))) {
 
         generateToken(res, user._id);
-      
+
         res.status(200).json({
             _id: user._id,
             name: user.name,
@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     const userExists = await User.findOne({ email });
 
-    if(userExists){
+    if (userExists) {
         // Client error
         res.status(400);
         throw new Error('User already exists');
@@ -46,7 +46,7 @@ const registerUser = asyncHandler(async (req, res) => {
         password
     });
 
-    if (user){
+    if (user) {
 
         generateToken(res, user._id);
 
@@ -60,7 +60,7 @@ const registerUser = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error('Invalid user data');
     };
- });
+});
 
 // description: logout user / clear cookie
 // route: POST /api/users/logout
@@ -80,7 +80,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 const getUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
 
-    if(user){
+    if (user) {
         res.status(200).json({
             _id: user._id,
             name: user.name,
@@ -135,7 +135,7 @@ const getUsers = asyncHandler(async (req, res) => {
 const getUserById = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id).select('-password');
 
-    if(user){
+    if (user) {
         return res.status(200).json(user);
     } else {
         res.status(404);
@@ -154,10 +154,23 @@ const updateUser = asyncHandler(async (req, res) => {
 // route: DELETE /api/users/:id
 // access: private/admin
 const deleteUser = asyncHandler(async (req, res) => {
-    res.send('Delete User');
+    const user = await User.findById(req.params.id).select('-password');
+
+    if (user) {
+        if (user.isAdmin) {
+            res.status(400);
+            throw new Error('Cannot delete admin user');
+        };
+        await User.deleteOne({ _id: user._id });
+        res.status(200).json({ message: 'User deleted successfully' });
+
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    };
 });
 
-export { 
+export {
     authUser,
     registerUser,
     logoutUser,
@@ -167,4 +180,4 @@ export {
     deleteUser,
     getUserById,
     updateUser
- }
+}
