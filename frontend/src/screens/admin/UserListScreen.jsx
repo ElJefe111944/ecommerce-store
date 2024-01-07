@@ -3,28 +3,32 @@ import { Table, Button } from 'react-bootstrap';
 import { FaTrash, FaTimes, FaEdit, FaCheck } from 'react-icons/fa';
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
-import { useGetUsersQuery } from '../../slices/userApiSlice';
+import { toast } from "react-toastify";
+import { useGetUsersQuery, useDeleteUserMutation } from '../../slices/userApiSlice';
 
 
 const UserListScreen = () => {
 
     const { data: users, refetch, isLoading, error } = useGetUsersQuery();
 
+    const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
+
     const deleteHandler = async (userId) => {
-        if (window.confirm('Are you sure you want to Delete this user?')) {
-            // try {
-            //     await deleteProduct(productId);
-            //     refetch();
-            //     toast.success('Product successfully deleted');
-            // } catch (error) {
-            //     toast.error(error?.data?.message || error?.error);
-            // };
+        if (window.confirm('Are you sure you want to delete this user?')) {
+            try {
+                await deleteUser(userId);
+                refetch();
+                toast.success('User successfully deleted');
+            } catch (error) {
+                toast.error(error?.data?.message || error?.error);
+            };
         };
     }
 
     return (
         <div>
             <h1>Users</h1>
+            {loadingDelete && <Loader />}
             {isLoading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
                 <Table striped hover responsive className='table-sm'>
                     <thead>
