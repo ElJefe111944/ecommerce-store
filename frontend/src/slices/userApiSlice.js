@@ -29,10 +29,23 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: 'PUT',
                 body: data,
             }),
+        }),
+        getUsers: builder.query({
+            query: () => ({
+                url: USERS_URL,
+            }),
+            providesTags: ['Users'], // remove from cache
+            keepUnusedDataFor: 5
         })
     }),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useProfileMutation } = usersApiSlice;
+export const { 
+    useLoginMutation, 
+    useRegisterMutation, 
+    useLogoutMutation, 
+    useProfileMutation,
+    useGetUsersQuery 
+} = usersApiSlice;
