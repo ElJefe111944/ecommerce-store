@@ -32,6 +32,7 @@ const HomeScreen = () => {
         <Pagination 
           pages={data.pages}
           page={data.page}
+          keyword={keyword ? keyword : ''}
         />
       </>
     ) }
