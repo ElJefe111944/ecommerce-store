@@ -7,7 +7,7 @@ import './assets/styles/index.css'
 import App from './App';
 import store from './store';
 import { Provider } from 'react-redux';
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
@@ -31,7 +31,9 @@ const router = createBrowserRouter(
       <Route path='/' element={<App />}>
         {/* Public Routes */}
         <Route index={true} path='/' element={<HomeScreen />} />
+        <Route path='/search/:keyword' element={<HomeScreen />} />
         <Route path='/page/:pageNumber' element={<HomeScreen />} />
+        <Route path='/search/:keyword/page/:pageNumber' element={<HomeScreen />} />
         <Route path='/product/:id' element={<ProductScreen />} />
         <Route path='/cart' element={<CartScreen />} />
         <Route path='/login' element={<LoginScreen />} />

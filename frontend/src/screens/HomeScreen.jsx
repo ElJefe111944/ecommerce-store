@@ -9,9 +9,9 @@ import { useGetProductsQuery } from "../slices/productsApiSlice";
 
 const HomeScreen = () => {
 
-  const { pageNumber } = useParams();
+  const { pageNumber, keyword } = useParams();
 
-  const { data, isLoading, isError } = useGetProductsQuery({ pageNumber });
+  const { data, isLoading, isError } = useGetProductsQuery({ pageNumber, keyword });
 
   return (
     <>
