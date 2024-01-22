@@ -2,7 +2,7 @@ import { Pagination } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 
-const Pagination = ({ pages, page, isAdmin = false }) => {
+const Paginate = ({ pages, page, isAdmin = false }) => {
     return (
         pages > 1 && (
             <Pagination>
@@ -21,4 +21,4 @@ const Pagination = ({ pages, page, isAdmin = false }) => {
     )
 };
 
-export default Pagination
+export default Paginate

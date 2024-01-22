@@ -7,7 +7,7 @@ import Product from "../models/productModel.js";
 // access: public
 const getProducts = asyncHandler(async (req, res) => {
 
-    const pageSize = 2;
+    const pageSize = 4;
     const page = Number(req.query.pageNumber) || 1;
 
     const count = await Product.countDocuments();
