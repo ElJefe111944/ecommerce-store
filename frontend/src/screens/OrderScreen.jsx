@@ -50,13 +50,14 @@ const OrderScreen = () => {
         }
     }, [order, paypal, paypalDispatch, loadingPaypal, errorPaypal]);
 
-    const onApproveTest = async () => {
-        await payOrder({ orderId, details: { payer: {} } });
+    // TESTING ONLY! REMOVE BEFORE PRODUCTION
+    // const onApproveTest = async () => {
+    //     await payOrder({ orderId, details: { payer: {} } });
 
-        refetch();
-        toast.success('Payment successful');
+    //     refetch();
+    //     toast.success('Payment successful');
 
-    };
+    // };
 
     const onApprove = (data, actions) => {
         return actions.order.capture().then(async function (details) {
