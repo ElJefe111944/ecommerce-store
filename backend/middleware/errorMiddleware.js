@@ -15,18 +15,7 @@ const errorHandler = (err, req, res, next) => {
     // It extracts the error message and stack trace from the error object.
     let message = err.message;
 
-
-    // If the error is a mongoose CastError and has the kind 'ObjectId', 
-    // it is treated as a resource not found error. In this case, 
-    // it sets the status code to 404 and changes the error message.
-    if(err.name === 'CastError' && err.kind === 'ObjectId'){
-        message = `Resource not found`;
-        statusCode = 404;
-    }; 
-    // Check if headers have already been sent
-    if (res.headersSent) {
-        return next(err);
-    }
+    
 
     //Finally, it sends a JSON response with the appropriate status code, error message, and, in production mode, a simplified stack trace.
     res.status(statusCode).json({
