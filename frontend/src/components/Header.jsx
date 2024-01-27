@@ -37,7 +37,7 @@ const Header = () => {
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>
-              <FaWolfPackBattalion />&nbsp;EncantoCasa
+              <FaWolfPackBattalion />&nbsp;SilverHowl Electronics
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -45,8 +45,7 @@ const Header = () => {
             <Nav className="ms-auto">
               <SearchBox />
               <LinkContainer style={{
-                display: 'flex',
-                alignItems: 'center',
+
               }} to="/cart">
                 <Nav.Link>
                   <FaShoppingCart />&nbsp; Cart
