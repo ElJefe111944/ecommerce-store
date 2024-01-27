@@ -23,9 +23,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 //Routes
-app.get('/', (req, res) => {
-    res.send('API is running...');
-});
+// app.get('/', (req, res) => {
+//     res.send('API is running...');
+// });
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
