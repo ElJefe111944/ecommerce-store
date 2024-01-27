@@ -95,6 +95,7 @@ const ProductListScreen = () => {
                     <Pagination
                         pages={data.pages}
                         page={data.page}
+                        isAdmin={true}
                     />
                 </>
             )}
