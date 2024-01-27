@@ -8,7 +8,6 @@ SilverHowl Electronics is a full-featured MERN (MongoDB, Express, React, Node.js
 ![](./frontend/src/assets/images/3.png)
 ![](./frontend/src/assets/images/4.png)
 ![](./frontend/src/assets/images/5.png)
-![](./frontend/src/assets/images/6.png)
 ![](./frontend/src/assets/images/7.png)
 ![](./frontend/src/assets/images/8.png)
 
